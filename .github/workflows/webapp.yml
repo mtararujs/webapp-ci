@@ -78,12 +78,10 @@ jobs:
         if: steps.filters.outputs.frontend == 'true'
         run: |
           kubectl set image deployment/frontend-deployment frontend=mtararujs/webapp-frontend:$GITHUB_SHA
-          kubectl rollout restart deployment/frontend-deployment
       - name: Deploy Backend to PROD
         if: steps.filters.outputs.backend == 'true'
         run: |
           kubectl set image deployment/backend-deployment backend=mtararujs/webapp-backend:$GITHUB_SHA
-          kubectl rollout restart deployment/backend-deployment
 
   api-tests-prod:
     name: API tests on PROD
