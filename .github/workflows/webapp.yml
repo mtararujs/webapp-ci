@@ -109,7 +109,7 @@ jobs:
     name: Backend rollback on PROD
     runs-on: self-hosted
     needs: [api-tests-prod]
-    if: $${{ always() && contains(needs.*.result, 'failure')}}
+    if: ${{ always() && contains(needs.*.result, 'failure')}}
     steps:
       - name: Rollback for the Backend (PROD)
         run: |
