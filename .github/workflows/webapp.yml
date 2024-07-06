@@ -59,14 +59,17 @@ jobs:
     runs-on: self-hosted
     needs: [deploy-prod]
     steps:
-      - name: Test Step
-        run: echo "Test step"
+      - name: Run API tests on PROD
+        run: |
+          docker pull mtararujs/api-tests:latest
+          docker run --rm --network=host --name api-tests-prod mtararujs/api-tests:latest cucumber PLATFORM=PRD
 
   rollback-backend:
     name: Backend rollback on PROD
     runs-on: self-hosted
     needs: [api-tests-prod]
     steps:
-      - name: Test Step
-        run: echo "Test step"
+      - name: Rollback for the Backend (PROD)
+        run: |
+          kubectl rollout undo deployments backend-deployment
 
