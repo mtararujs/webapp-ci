@@ -18,21 +18,24 @@ jobs:
     steps:
       - name: Test Step
         run: echo "Test step"
-  deploy-prd:
+  deploy-prod:
     name: Deploy to PROD (K8S)
     runs-on: self-hosted
+    needs: [build-frontend, build-backend]
     steps:
       - name: Test Step
         run: echo "Test step"
-  api-tests-prd:
+  api-tests-prod:
     name: API tests on PROD
     runs-on: self-hosted
+    needs: [deploy-prod]
     steps:
       - name: Test Step
         run: echo "Test step"
   rollback-backend:
     name: Backend rollback on PROD
     runs-on: self-hosted
+    needs: [api-tests-prod]
     steps:
       - name: Test Step
         run: echo "Test step"
